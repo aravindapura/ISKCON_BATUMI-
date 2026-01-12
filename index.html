@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISKCON Batumi — One Page</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        background: #ffffff;
+        color: #111111;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      main {
+        width: 100%;
+        max-width: 520px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 56px;
+      }
+
+      .screen {
+        display: none;
+        flex-direction: column;
+        gap: 32px;
+        min-height: 60vh;
+      }
+
+      .screen.active {
+        display: flex;
+      }
+
+      h1 {
+        font-size: 36px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 17px;
+        line-height: 1.6;
+      }
+
+      .spacer {
+        height: 40px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 16px;
+      }
+
+      button {
+        border: 1px solid #111111;
+        background: transparent;
+        color: #111111;
+        padding: 12px 20px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      button:hover,
+      button:focus-visible {
+        background: #111111;
+        color: #ffffff;
+        outline: none;
+      }
+
+      .meta {
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 640px) {
+        h1 {
+          font-size: 30px;
+        }
+
+        main {
+          gap: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="screen active" id="intro">
+        <div>
+          <div class="meta">Intro</div>
+          <div class="spacer"></div>
+          <h1>ISKCON Batumi</h1>
+        </div>
+        <p>
+          Минималистичный одностраничный сайт-визитка: чистый белый фон, тишина
+          типографики и много воздуха вокруг каждой строки.
+        </p>
+        <div class="actions">
+          <button type="button" data-target="main">Перейти к Main</button>
+        </div>
+      </section>
+
+      <section class="screen" id="main">
+        <div>
+          <div class="meta">Main</div>
+          <div class="spacer"></div>
+          <h2>Кратко о нас</h2>
+        </div>
+        <p>
+          Здесь можно разместить основное сообщение, контакты и расписание.
+          Максимальная ширина — 520px, свободный ритм и аккуратные паузы.
+        </p>
+        <div class="actions">
+          <button type="button" data-target="intro">Вернуться в Intro</button>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const buttons = document.querySelectorAll("[data-target]");
+      const screens = document.querySelectorAll(".screen");
+
+      const showScreen = (id) => {
+        screens.forEach((screen) => {
+          screen.classList.toggle("active", screen.id === id);
+        });
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          showScreen(button.dataset.target);
+        });
+      });
+    </script>
+  </body>
+</html>
