@@ -57,6 +57,21 @@
         text-align: center;
       }
 
+      .lang-switch {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        gap: 12px;
+        font-size: 14px;
+      }
+
+      .lang-button.active {
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
       .intro-message {
         font-size: 36px;
         font-weight: 600;
@@ -117,6 +132,17 @@
         outline: none;
       }
 
+      .lang-button {
+        border: none;
+        background: transparent;
+        color: inherit;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 2px 0;
+        cursor: pointer;
+      }
+
       .meta {
         font-size: 14px;
         letter-spacing: 0.02em;
@@ -146,17 +172,24 @@
       </section>
 
       <section class="screen" id="main">
-        <div>
-          <div class="meta">Main</div>
-          <div class="spacer"></div>
-          <h2>Кратко о нас</h2>
+        <div class="lang-switch" role="tablist" aria-label="Language">
+          <button class="lang-button" type="button" data-lang="ru">RU</button>
+          <button class="lang-button" type="button" data-lang="en">EN</button>
+          <button class="lang-button" type="button" data-lang="ka">KA</button>
         </div>
-        <p>
+        <div>
+          <div class="meta" data-i18n="mainMeta">Main</div>
+          <div class="spacer"></div>
+          <h2 data-i18n="mainTitle">Кратко о нас</h2>
+        </div>
+        <p data-i18n="mainBody">
           Здесь можно разместить основное сообщение, контакты и расписание.
           Максимальная ширина — 520px, свободный ритм и аккуратные паузы.
         </p>
         <div class="actions">
-          <button type="button" data-target="intro">Вернуться в Intro</button>
+          <button type="button" data-target="intro" data-i18n="backButton">
+            Вернуться в Intro
+          </button>
         </div>
       </section>
     </main>
@@ -164,10 +197,51 @@
     <script>
       const INTRO_ID = "intro";
       const MAIN_ID = "main";
+      const LANGUAGE_KEY = "lang";
       const buttons = document.querySelectorAll("[data-target]");
       const screens = document.querySelectorAll(".screen");
+      const languageButtons = document.querySelectorAll("[data-lang]");
+      const i18nElements = document.querySelectorAll("[data-i18n]");
       let introTimeout;
       let currentScreen = INTRO_ID;
+
+      const translations = {
+        en: {
+          mainMeta: "Main",
+          mainTitle: "About",
+          mainBody:
+            "A concise space for the main message, contacts, and schedule. Maximum width is 520px with calm rhythm and generous spacing.",
+          backButton: "Back to Intro",
+        },
+        ru: {
+          mainMeta: "Главное",
+          mainTitle: "Кратко о нас",
+          mainBody:
+            "Здесь можно разместить основное сообщение, контакты и расписание. Максимальная ширина — 520px, свободный ритм и аккуратные паузы.",
+          backButton: "Вернуться в Intro",
+        },
+        ka: {
+          mainMeta: "მთავარი",
+          mainTitle: "ჩვენ შესახებ მოკლედ",
+          mainBody:
+            "აქ შეგიძლიათ განათავსოთ მთავარი გზავნილი, კონტაქტები და განრიგი. მაქსიმალური სიგანე — 520px, მშვიდი რიტმი და ბევრი სივრცე.",
+          backButton: "დაბრუნება Intro-ზე",
+        },
+      };
+
+      const applyLanguage = (lang) => {
+        const dictionary = translations[lang] || translations.en;
+        i18nElements.forEach((element) => {
+          const key = element.dataset.i18n;
+          if (dictionary[key]) {
+            element.textContent = dictionary[key];
+          }
+        });
+        languageButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === lang);
+        });
+        localStorage.setItem(LANGUAGE_KEY, lang);
+      };
 
       const showScreen = (id) => {
         currentScreen = id;
@@ -185,6 +259,9 @@
       };
 
       const hasVisited = localStorage.getItem("visited") === "true";
+      const savedLanguage = localStorage.getItem(LANGUAGE_KEY) || "en";
+
+      applyLanguage(savedLanguage);
 
       if (hasVisited) {
         showScreen(MAIN_ID);
@@ -201,6 +278,12 @@
       buttons.forEach((button) => {
         button.addEventListener("click", () => {
           showScreen(button.dataset.target);
+        });
+      });
+
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          applyLanguage(button.dataset.lang);
         });
       });
     </script>
