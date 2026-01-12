@@ -123,21 +123,16 @@
         height: 40px;
       }
 
-      .actions {
-        display: flex;
-        gap: 16px;
-      }
-
       .link-list {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 24px;
       }
 
-      .link-card {
+      .link-item {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 8px;
       }
 
       button {
@@ -195,10 +190,16 @@
         cursor: pointer;
       }
 
-      .meta {
-        font-size: 14px;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+      }
+
+      .title-block {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
       }
 
       @media (max-width: 640px) {
@@ -229,52 +230,41 @@
           <button class="lang-button" type="button" data-lang="en">EN</button>
           <button class="lang-button" type="button" data-lang="ka">KA</button>
         </div>
-        <div>
-          <div class="meta" data-i18n="mainMeta">Main</div>
-          <div class="spacer"></div>
-          <div class="title" data-i18n="subscribeTitle">
-            Подпишись, чтобы быть на связи.
+        <div class="main-content">
+          <div class="title-block">
+            <div class="title" data-i18n="subscribeTitle">
+              Подпишись, чтобы быть на связи.
+            </div>
+            <div class="subtitle" data-i18n="subscribeSubtitle">
+              Киртан • Прасад • Лекции
+            </div>
           </div>
-          <div class="subtitle" data-i18n="subscribeSubtitle">
-            Киртан • Прасад • Лекции
+          <div class="link-list">
+            <div class="link-item">
+              <a class="link-button" id="telegramLink" href="#">Telegram</a>
+              <div class="link-caption">Русский</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="instagramLink" href="#">Instagram</a>
+              <div class="link-caption">English</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="whatsappHindiLink" href="#"
+                >WhatsApp (Hindi)</a
+              >
+              <div class="link-caption">हिन्दी</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="whatsappGeorgianLink" href="#"
+                >WhatsApp (Georgian)</a
+              >
+              <div class="link-caption">ქართული</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="websiteRuLink" href="#">Website</a>
+              <div class="link-caption">Русский</div>
+            </div>
           </div>
-          <div class="spacer"></div>
-          <h2 data-i18n="mainTitle">Кратко о нас</h2>
-        </div>
-        <p data-i18n="mainBody">
-          Здесь можно разместить основное сообщение, контакты и расписание.
-          Максимальная ширина — 520px, свободный ритм и аккуратные паузы.
-        </p>
-        <div class="link-list">
-          <div class="link-card">
-            <a class="link-button" id="telegramLink" href="#">Telegram</a>
-            <div class="link-caption">Русский</div>
-          </div>
-          <div class="link-card">
-            <a class="link-button" id="instagramLink" href="#">Instagram</a>
-            <div class="link-caption">English</div>
-          </div>
-          <div class="link-card">
-            <a class="link-button" id="whatsappHindiLink" href="#"
-              >WhatsApp (Hindi)</a
-            >
-            <div class="link-caption">हिन्दी</div>
-          </div>
-          <div class="link-card">
-            <a class="link-button" id="whatsappGeorgianLink" href="#"
-              >WhatsApp (Georgian)</a
-            >
-            <div class="link-caption">ქართული</div>
-          </div>
-          <div class="link-card">
-            <a class="link-button" id="websiteRuLink" href="#">Website</a>
-            <div class="link-caption">Русский</div>
-          </div>
-        </div>
-        <div class="actions">
-          <button type="button" data-target="intro" data-i18n="backButton">
-            Вернуться в Intro
-          </button>
         </div>
       </section>
     </main>
@@ -295,7 +285,6 @@
         "#whatsappGeorgianLink"
       );
       const websiteRuLink = document.querySelector("#websiteRuLink");
-      const buttons = document.querySelectorAll("[data-target]");
       const screens = document.querySelectorAll(".screen");
       const languageButtons = document.querySelectorAll("[data-lang]");
       const i18nElements = document.querySelectorAll("[data-i18n]");
@@ -304,31 +293,16 @@
 
       const translations = {
         en: {
-          mainMeta: "Main",
           subscribeTitle: "Subscribe to stay in touch.",
           subscribeSubtitle: "Kirtan • Prasadam • Lectures",
-          mainTitle: "About",
-          mainBody:
-            "A concise space for the main message, contacts, and schedule. Maximum width is 520px with calm rhythm and generous spacing.",
-          backButton: "Back to Intro",
         },
         ru: {
-          mainMeta: "Главное",
           subscribeTitle: "Подпишись, чтобы быть на связи.",
           subscribeSubtitle: "Киртан • Прасад • Лекции",
-          mainTitle: "Кратко о нас",
-          mainBody:
-            "Здесь можно разместить основное сообщение, контакты и расписание. Максимальная ширина — 520px, свободный ритм и аккуратные паузы.",
-          backButton: "Вернуться в Intro",
         },
         ka: {
-          mainMeta: "მთავარი",
           subscribeTitle: "გამოიწერე, რომ კავშირზე ვიყოთ.",
           subscribeSubtitle: "კირტანი • პრასადი • ლექციები",
-          mainTitle: "ჩვენ შესახებ მოკლედ",
-          mainBody:
-            "აქ შეგიძლიათ განათავსოთ მთავარი გზავნილი, კონტაქტები და განრიგი. მაქსიმალური სიგანე — 520px, მშვიდი რიტმი და ბევრი სივრცე.",
-          backButton: "დაბრუნება Intro-ზე",
         },
       };
 
@@ -381,12 +355,6 @@
         if (currentScreen === INTRO_ID) {
           showMain();
         }
-      });
-
-      buttons.forEach((button) => {
-        button.addEventListener("click", () => {
-          showScreen(button.dataset.target);
-        });
       });
 
       languageButtons.forEach((button) => {
