@@ -28,7 +28,7 @@
       main {
         width: 100%;
         max-width: 520px;
-        padding: 24px;
+        padding: 24px 24px 32px;
         min-height: 60vh;
         position: relative;
       }
@@ -57,10 +57,13 @@
         text-align: center;
       }
 
+      .lang-wrap {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 8px;
+      }
+
       .lang-switch {
-        position: absolute;
-        top: 0;
-        right: 0;
         display: flex;
         gap: 12px;
         font-size: 14px;
@@ -73,7 +76,7 @@
       }
 
       .intro-message {
-        font-size: 36px;
+        font-size: 28px;
         font-weight: 600;
         letter-spacing: -0.02em;
         animation: fadeSlide 1.2s ease forwards;
@@ -90,32 +93,26 @@
         }
       }
 
-      h1 {
-        font-size: 36px;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-      }
-
       h2 {
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 600;
       }
 
       .title {
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 600;
         letter-spacing: -0.01em;
       }
 
       .subtitle {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 400;
         color: #4d4d4d;
         letter-spacing: 0.02em;
       }
 
       p {
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.6;
       }
 
@@ -156,8 +153,8 @@
         border: 1px solid #111111;
         background: transparent;
         color: #111111;
-        padding: 12px 20px;
-        font-size: 15px;
+        padding: 14px 20px;
+        font-size: 16px;
         min-height: 48px;
         display: flex;
         align-items: center;
@@ -211,10 +208,29 @@
         letter-spacing: 0.04em;
       }
 
-      @media (max-width: 640px) {
-        h1,
+      @media (min-width: 640px) {
         .intro-message {
-          font-size: 30px;
+          font-size: 36px;
+        }
+
+        h2 {
+          font-size: 24px;
+        }
+
+        .title {
+          font-size: 28px;
+        }
+
+        .subtitle {
+          font-size: 16px;
+        }
+
+        p {
+          font-size: 17px;
+        }
+
+        .link-button {
+          font-size: 15px;
         }
       }
 
@@ -234,10 +250,12 @@
       </section>
 
       <section class="screen" id="main">
-        <div class="lang-switch" role="tablist" aria-label="Language">
-          <button class="lang-button" type="button" data-lang="ru">RU</button>
-          <button class="lang-button" type="button" data-lang="en">EN</button>
-          <button class="lang-button" type="button" data-lang="ka">KA</button>
+        <div class="lang-wrap">
+          <div class="lang-switch" role="tablist" aria-label="Language">
+            <button class="lang-button" type="button" data-lang="ru">RU</button>
+            <button class="lang-button" type="button" data-lang="en">EN</button>
+            <button class="lang-button" type="button" data-lang="ka">KA</button>
+          </div>
         </div>
         <div class="main-content">
           <div class="title-block">
@@ -301,6 +319,7 @@
       const screens = document.querySelectorAll(".screen");
       const languageButtons = document.querySelectorAll("[data-lang]");
       const i18nElements = document.querySelectorAll("[data-i18n]");
+      const hapticTargets = document.querySelectorAll("button, .link-button");
       let introTimeout;
       let currentScreen = INTRO_ID;
 
@@ -368,6 +387,18 @@
         if (currentScreen === INTRO_ID) {
           showMain();
         }
+      });
+
+      hapticTargets.forEach((target) => {
+        target.addEventListener(
+          "click",
+          () => {
+            if (navigator.vibrate) {
+              navigator.vibrate(10);
+            }
+          },
+          { passive: true }
+        );
       });
 
       languageButtons.forEach((button) => {
