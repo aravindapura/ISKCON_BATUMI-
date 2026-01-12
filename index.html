@@ -128,6 +128,18 @@
         gap: 16px;
       }
 
+      .link-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .link-card {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
       button {
         border: 1px solid #111111;
         background: transparent;
@@ -143,6 +155,33 @@
         background: #111111;
         color: #ffffff;
         outline: none;
+      }
+
+      .link-button {
+        border: 1px solid #111111;
+        background: transparent;
+        color: #111111;
+        padding: 12px 20px;
+        font-size: 15px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .link-button:hover,
+      .link-button:focus-visible {
+        background: #111111;
+        color: #ffffff;
+        outline: none;
+      }
+
+      .link-caption {
+        font-size: 12px;
+        color: #4d4d4d;
+        letter-spacing: 0.02em;
       }
 
       .lang-button {
@@ -206,6 +245,32 @@
           Здесь можно разместить основное сообщение, контакты и расписание.
           Максимальная ширина — 520px, свободный ритм и аккуратные паузы.
         </p>
+        <div class="link-list">
+          <div class="link-card">
+            <a class="link-button" id="telegramLink" href="#">Telegram</a>
+            <div class="link-caption">Русский</div>
+          </div>
+          <div class="link-card">
+            <a class="link-button" id="instagramLink" href="#">Instagram</a>
+            <div class="link-caption">English</div>
+          </div>
+          <div class="link-card">
+            <a class="link-button" id="whatsappHindiLink" href="#"
+              >WhatsApp (Hindi)</a
+            >
+            <div class="link-caption">हिन्दी</div>
+          </div>
+          <div class="link-card">
+            <a class="link-button" id="whatsappGeorgianLink" href="#"
+              >WhatsApp (Georgian)</a
+            >
+            <div class="link-caption">ქართული</div>
+          </div>
+          <div class="link-card">
+            <a class="link-button" id="websiteRuLink" href="#">Website</a>
+            <div class="link-caption">Русский</div>
+          </div>
+        </div>
         <div class="actions">
           <button type="button" data-target="intro" data-i18n="backButton">
             Вернуться в Intro
@@ -218,6 +283,18 @@
       const INTRO_ID = "intro";
       const MAIN_ID = "main";
       const LANGUAGE_KEY = "lang";
+      const telegramUrl = "#";
+      const instagramUrl = "#";
+      const whatsappHindiUrl = "#";
+      const whatsappGeorgianUrl = "#";
+      const websiteRuUrl = "#";
+      const telegramLink = document.querySelector("#telegramLink");
+      const instagramLink = document.querySelector("#instagramLink");
+      const whatsappHindiLink = document.querySelector("#whatsappHindiLink");
+      const whatsappGeorgianLink = document.querySelector(
+        "#whatsappGeorgianLink"
+      );
+      const websiteRuLink = document.querySelector("#websiteRuLink");
       const buttons = document.querySelectorAll("[data-target]");
       const screens = document.querySelectorAll(".screen");
       const languageButtons = document.querySelectorAll("[data-lang]");
@@ -288,6 +365,11 @@
       const savedLanguage = localStorage.getItem(LANGUAGE_KEY) || "en";
 
       applyLanguage(savedLanguage);
+      telegramLink.href = telegramUrl;
+      instagramLink.href = instagramUrl;
+      whatsappHindiLink.href = whatsappHindiUrl;
+      whatsappGeorgianLink.href = whatsappGeorgianUrl;
+      websiteRuLink.href = websiteRuUrl;
 
       if (hasVisited) {
         showScreen(MAIN_ID);
