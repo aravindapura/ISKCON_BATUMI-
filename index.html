@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISKCON Batumi — One Page</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        background: #ffffff;
+        color: #111111;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        padding: calc(16px + env(safe-area-inset-top))
+          calc(16px + env(safe-area-inset-right))
+          calc(16px + env(safe-area-inset-bottom))
+          calc(16px + env(safe-area-inset-left));
+      }
+
+      main {
+        width: 100%;
+        max-width: 520px;
+        padding: 20px 20px 28px;
+        min-height: 60vh;
+        position: relative;
+      }
+
+      .screen {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        pointer-events: none;
+      }
+
+      .screen.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .screen.intro {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .lang-wrap {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 8px;
+      }
+
+      .lang-switch {
+        display: flex;
+        gap: 12px;
+        font-size: 14px;
+        flex-wrap: wrap;
+      }
+
+      .lang-button.active {
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .intro-message {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        animation: fadeSlide 1.2s ease forwards;
+      }
+
+      @keyframes fadeSlide {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .subtitle {
+        font-size: 15px;
+        font-weight: 400;
+        color: #4d4d4d;
+        letter-spacing: 0.02em;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .spacer {
+        height: 40px;
+      }
+
+      .link-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .link-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      button {
+        border: 1px solid #111111;
+        background: transparent;
+        color: #111111;
+        padding: 12px 20px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      button:hover,
+      button:focus-visible {
+        background: #111111;
+        color: #ffffff;
+        outline: none;
+      }
+
+      .link-button {
+        border: 1px solid #111111;
+        background: transparent;
+        color: #111111;
+        padding: 14px 20px;
+        font-size: 16px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+        width: 100%;
+        text-align: center;
+        word-break: break-word;
+      }
+
+      .link-button:hover,
+      .link-button:focus-visible {
+        background: #111111;
+        color: #ffffff;
+        outline: none;
+      }
+
+      .link-caption {
+        font-size: 12px;
+        color: #4d4d4d;
+        letter-spacing: 0.02em;
+      }
+
+      .lang-button {
+        border: none;
+        background: transparent;
+        color: inherit;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 2px 0;
+        cursor: pointer;
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .title-block {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 12px;
+        color: #6f6f6f;
+        letter-spacing: 0.04em;
+      }
+
+      @media (min-width: 640px) {
+        main {
+          padding: 24px 24px 32px;
+        }
+
+        .intro-message {
+          font-size: 36px;
+        }
+
+        h2 {
+          font-size: 24px;
+        }
+
+        .title {
+          font-size: 28px;
+        }
+
+        .subtitle {
+          font-size: 16px;
+        }
+
+        p {
+          font-size: 17px;
+        }
+
+        .link-button {
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .title {
+          font-size: 22px;
+        }
+
+        .subtitle {
+          font-size: 14px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="screen intro active" id="intro">
+        <div class="intro-message">Just now.</div>
+      </section>
+
+      <section class="screen" id="main">
+        <div class="lang-wrap">
+          <div class="lang-switch" role="tablist" aria-label="Language">
+            <button class="lang-button" type="button" data-lang="ru">RU</button>
+            <button class="lang-button" type="button" data-lang="en">EN</button>
+            <button class="lang-button" type="button" data-lang="ka">KA</button>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="title-block">
+            <div class="title" data-i18n="subscribeTitle">
+              Подпишись, чтобы быть на связи.
+            </div>
+            <div class="subtitle" data-i18n="subscribeSubtitle">
+              Киртан • Прасад • Лекции
+            </div>
+          </div>
+          <div class="link-list">
+            <div class="link-item">
+              <a class="link-button" id="telegramLink" href="#">Telegram</a>
+              <div class="link-caption">Русский</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="instagramLink" href="#">Instagram</a>
+              <div class="link-caption">English</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="whatsappHindiLink" href="#"
+                >WhatsApp (Hindi)</a
+              >
+              <div class="link-caption">हिन्दी</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="whatsappGeorgianLink" href="#"
+                >WhatsApp (Georgian)</a
+              >
+              <div class="link-caption">ქართული</div>
+            </div>
+            <div class="link-item">
+              <a class="link-button" id="websiteRuLink" href="#">Website</a>
+              <div class="link-caption">Русский</div>
+            </div>
+          </div>
+          <footer class="footer">
+            <div>Just now.</div>
+            <div>Hare Krishna Batumi</div>
+          </footer>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const INTRO_ID = "intro";
+      const MAIN_ID = "main";
+      const LANGUAGE_KEY = "lang";
+      const telegramUrl = "https://t.me/harekrishnabatumi";
+      const instagramUrl =
+        "https://www.instagram.com/harekrishnabatumi?igsh=ZnNsZzFudTc0MHRt";
+      const whatsappHindiUrl = "https://chat.whatsapp.com/GSNVIpLDFO23CCOE1ntarK";
+      const whatsappGeorgianUrl =
+        "https://chat.whatsapp.com/FC5wmur0zvHJqlF5SgEgVS";
+      const websiteRuUrl = "https://iskcone.com/batumi";
+      const telegramLink = document.querySelector("#telegramLink");
+      const instagramLink = document.querySelector("#instagramLink");
+      const whatsappHindiLink = document.querySelector("#whatsappHindiLink");
+      const whatsappGeorgianLink = document.querySelector(
+        "#whatsappGeorgianLink"
+      );
+      const websiteRuLink = document.querySelector("#websiteRuLink");
+      const screens = document.querySelectorAll(".screen");
+      const languageButtons = document.querySelectorAll("[data-lang]");
+      const i18nElements = document.querySelectorAll("[data-i18n]");
+      const hapticTargets = document.querySelectorAll("button, .link-button");
+      let introTimeout;
+      let currentScreen = INTRO_ID;
+
+      const translations = {
+        en: {
+          subscribeTitle: "Subscribe to stay in touch.",
+          subscribeSubtitle: "Kirtan • Prasadam • Lectures",
+        },
+        ru: {
+          subscribeTitle: "Подпишись, чтобы быть на связи.",
+          subscribeSubtitle: "Киртан • Прасад • Лекции",
+        },
+        ka: {
+          subscribeTitle: "გამოიწერე, რომ კავშირზე ვიყოთ.",
+          subscribeSubtitle: "კირტანი • პრასადი • ლექციები",
+        },
+      };
+
+      const applyLanguage = (lang) => {
+        const dictionary = translations[lang] || translations.en;
+        i18nElements.forEach((element) => {
+          const key = element.dataset.i18n;
+          if (dictionary[key]) {
+            element.textContent = dictionary[key];
+          }
+        });
+        languageButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === lang);
+        });
+        localStorage.setItem(LANGUAGE_KEY, lang);
+      };
+
+      const showScreen = (id) => {
+        currentScreen = id;
+        screens.forEach((screen) => {
+          screen.classList.toggle("active", screen.id === id);
+        });
+      };
+
+      const showMain = () => {
+        showScreen(MAIN_ID);
+        localStorage.setItem("visited", "true");
+        if (introTimeout) {
+          clearTimeout(introTimeout);
+        }
+      };
+
+      const hasVisited = localStorage.getItem("visited") === "true";
+      const savedLanguage = localStorage.getItem(LANGUAGE_KEY) || "en";
+
+      applyLanguage(savedLanguage);
+      telegramLink.href = telegramUrl;
+      instagramLink.href = instagramUrl;
+      whatsappHindiLink.href = whatsappHindiUrl;
+      whatsappGeorgianLink.href = whatsappGeorgianUrl;
+      websiteRuLink.href = websiteRuUrl;
+
+      if (hasVisited) {
+        showScreen(MAIN_ID);
+      } else {
+        introTimeout = setTimeout(showMain, 1800);
+      }
+
+      document.addEventListener("click", () => {
+        if (currentScreen === INTRO_ID) {
+          showMain();
+        }
+      });
+
+      hapticTargets.forEach((target) => {
+        target.addEventListener(
+          "click",
+          () => {
+            if (navigator.vibrate) {
+              navigator.vibrate(10);
+            }
+          },
+          { passive: true }
+        );
+      });
+
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          applyLanguage(button.dataset.lang);
+        });
+      });
+    </script>
+  </body>
+</html>
