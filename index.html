@@ -28,7 +28,7 @@
       main {
         width: 100%;
         max-width: 520px;
-        padding: 24px 24px 32px;
+        padding: 20px 20px 28px;
         min-height: 60vh;
         position: relative;
       }
@@ -67,6 +67,7 @@
         display: flex;
         gap: 12px;
         font-size: 14px;
+        flex-wrap: wrap;
       }
 
       .lang-button.active {
@@ -161,6 +162,9 @@
         justify-content: center;
         text-decoration: none;
         transition: background 0.2s ease, color 0.2s ease;
+        width: 100%;
+        text-align: center;
+        word-break: break-word;
       }
 
       .link-button:hover,
@@ -190,7 +194,7 @@
       .main-content {
         display: flex;
         flex-direction: column;
-        gap: 48px;
+        gap: 40px;
       }
 
       .title-block {
@@ -209,6 +213,10 @@
       }
 
       @media (min-width: 640px) {
+        main {
+          padding: 24px 24px 32px;
+        }
+
         .intro-message {
           font-size: 36px;
         }
@@ -231,6 +239,16 @@
 
         .link-button {
           font-size: 15px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .title {
+          font-size: 22px;
+        }
+
+        .subtitle {
+          font-size: 14px;
         }
       }
 
