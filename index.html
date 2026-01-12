@@ -101,6 +101,19 @@
         font-weight: 600;
       }
 
+      .title {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        font-weight: 400;
+        color: #4d4d4d;
+        letter-spacing: 0.02em;
+      }
+
       p {
         font-size: 17px;
         line-height: 1.6;
@@ -180,6 +193,13 @@
         <div>
           <div class="meta" data-i18n="mainMeta">Main</div>
           <div class="spacer"></div>
+          <div class="title" data-i18n="subscribeTitle">
+            Подпишись, чтобы быть на связи.
+          </div>
+          <div class="subtitle" data-i18n="subscribeSubtitle">
+            Киртан • Прасад • Лекции
+          </div>
+          <div class="spacer"></div>
           <h2 data-i18n="mainTitle">Кратко о нас</h2>
         </div>
         <p data-i18n="mainBody">
@@ -208,6 +228,8 @@
       const translations = {
         en: {
           mainMeta: "Main",
+          subscribeTitle: "Subscribe to stay in touch.",
+          subscribeSubtitle: "Kirtan • Prasadam • Lectures",
           mainTitle: "About",
           mainBody:
             "A concise space for the main message, contacts, and schedule. Maximum width is 520px with calm rhythm and generous spacing.",
@@ -215,6 +237,8 @@
         },
         ru: {
           mainMeta: "Главное",
+          subscribeTitle: "Подпишись, чтобы быть на связи.",
+          subscribeSubtitle: "Киртан • Прасад • Лекции",
           mainTitle: "Кратко о нас",
           mainBody:
             "Здесь можно разместить основное сообщение, контакты и расписание. Максимальная ширина — 520px, свободный ритм и аккуратные паузы.",
@@ -222,6 +246,8 @@
         },
         ka: {
           mainMeta: "მთავარი",
+          subscribeTitle: "გამოიწერე, რომ კავშირზე ვიყოთ.",
+          subscribeSubtitle: "კირტანი • პრასადი • ლექციები",
           mainTitle: "ჩვენ შესახებ მოკლედ",
           mainBody:
             "აქ შეგიძლიათ განათავსოთ მთავარი გზავნილი, კონტაქტები და განრიგი. მაქსიმალური სიგანე — 520px, მშვიდი რიტმი და ბევრი სივრცე.",
