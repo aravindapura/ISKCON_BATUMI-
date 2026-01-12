@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ISKCON Batumi — One Page</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        background: #ffffff;
+        color: #111111;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      main {
+        width: 100%;
+        max-width: 520px;
+        padding: 24px;
+        min-height: 60vh;
+        position: relative;
+      }
+
+      .screen {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        pointer-events: none;
+      }
+
+      .screen.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .screen.intro {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .intro-message {
+        font-size: 36px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        animation: fadeSlide 1.2s ease forwards;
+      }
+
+      @keyframes fadeSlide {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        font-size: 36px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 17px;
+        line-height: 1.6;
+      }
+
+      .spacer {
+        height: 40px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 16px;
+      }
+
+      button {
+        border: 1px solid #111111;
+        background: transparent;
+        color: #111111;
+        padding: 12px 20px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      button:hover,
+      button:focus-visible {
+        background: #111111;
+        color: #ffffff;
+        outline: none;
+      }
+
+      .meta {
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 640px) {
+        h1,
+        .intro-message {
+          font-size: 30px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="screen intro active" id="intro">
+        <div class="intro-message">Just now.</div>
+      </section>
+
+      <section class="screen" id="main">
+        <div>
+          <div class="meta">Main</div>
+          <div class="spacer"></div>
+          <h2>Кратко о нас</h2>
+        </div>
+        <p>
+          Здесь можно разместить основное сообщение, контакты и расписание.
+          Максимальная ширина — 520px, свободный ритм и аккуратные паузы.
+        </p>
+        <div class="actions">
+          <button type="button" data-target="intro">Вернуться в Intro</button>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const INTRO_ID = "intro";
+      const MAIN_ID = "main";
+      const buttons = document.querySelectorAll("[data-target]");
+      const screens = document.querySelectorAll(".screen");
+      let introTimeout;
+      let currentScreen = INTRO_ID;
+
+      const showScreen = (id) => {
+        currentScreen = id;
+        screens.forEach((screen) => {
+          screen.classList.toggle("active", screen.id === id);
+        });
+      };
+
+      const showMain = () => {
+        showScreen(MAIN_ID);
+        localStorage.setItem("visited", "true");
+        if (introTimeout) {
+          clearTimeout(introTimeout);
+        }
+      };
+
+      const hasVisited = localStorage.getItem("visited") === "true";
+
+      if (hasVisited) {
+        showScreen(MAIN_ID);
+      } else {
+        introTimeout = setTimeout(showMain, 1800);
+      }
+
+      document.addEventListener("click", () => {
+        if (currentScreen === INTRO_ID) {
+          showMain();
+        }
+      });
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          showScreen(button.dataset.target);
+        });
+      });
+    </script>
+  </body>
+</html>
